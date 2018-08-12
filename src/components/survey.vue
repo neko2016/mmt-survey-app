@@ -18,7 +18,6 @@
     </div>
 
     <div v-if="resultsStage">
-      <!-- You got {{correct}} right out of {{questions.length}} questions. Your percentage is {{perc}}%. -->
       <p>You have submitted {{this.answers}} </p>
       <p>Thank you for participating the survey.</p>
     </div>
@@ -40,8 +39,6 @@ export default {
       resultsStage: false,
       currentQuestion: 0,
       answers: []
-      // correct: 0,
-      // perc: null
     }
   },
   components: {
@@ -69,15 +66,7 @@ export default {
     },
     handleResults () {
       console.log('results', this.answers)
-      // TODO send data to server
-
-      // this.questions.forEach((a, index) => {
-      //   if (this.answers[index] === a.answer) {
-      //     this.correct++
-      //   }
-      // })
-      // this.perc = ((this.correct / this.questions.length) * 100).toFixed(2)
-      // console.log(this.correct + ' ' + this.perc)
+      // TODO: send data to server
     }
   }
 }
