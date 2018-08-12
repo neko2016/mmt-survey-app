@@ -1,69 +1,65 @@
 <template>
   <div id="quiz">
     <div v-if="introStage">
-      <h1>Welcome to the Quiz: {{title}}</h1>
-      <p>Some kind of text here. Blah blah.</p>
+      <h1>{{title}}</h1>
+      <p>This survey contains 10 sections.</p>
+      <p>You will be presented with 2 sound clips in each section.</p>
+      <p>Please choose the one that you prefer.</p>
       <button @click="startQuiz">START!</button>
     </div>
 
     <!-- v-bind:childProps='parentProps' -->
     <div v-if="questionStage">
-      <question
+      <single-question
         v-bind:question="questions[currentQuestion]"
         v-bind:question-number="currentQuestion+1"
         v-on:answer="handleAnswer"
-      ></question>
+      ></single-question>
     </div>
 
     <div v-if="resultsStage">
-      You got {{correct}} right out of {{questions.length}} questions. Your percentage is {{perc}}%.
+      <!-- You got {{correct}} right out of {{questions.length}} questions. Your percentage is {{perc}}%. -->
+      <p>You have submitted {{this.answers}} </p>
+      <p>Thank you for participating the survey.</p>
     </div>
 </div>
 </template>
 
 <script>
-// import quizData from './data.json'
+import data from './data.json'
 import qs from './question.vue'
-const quizData = 'https://api.myjson.com/bins/ahn1p'
 
 export default {
   name: 'survey',
   data () {
     return {
+      title: data.title,
+      questions: data.questions,
       introStage: false,
       questionStage: false,
       resultsStage: false,
-      title: '',
-      questions: [],
       currentQuestion: 0,
-      answers: [],
-      correct: 0,
-      perc: null
+      answers: []
+      // correct: 0,
+      // perc: null
     }
   },
   components: {
-    'question': qs
+    'single-question': qs
   },
   mounted () {
-    fetch(quizData)
-      .then(res => res.json())
-      .then(res => {
-        this.title = res.title
-        this.questions = res.questions
-        this.introStage = true
-      })
+    this.introStage = true
   },
   methods: {
     startQuiz () {
       this.introStage = false
       this.questionStage = true
-      console.log('test' + JSON.stringify(this.questions[this.currentQuestion]))
     },
     handleAnswer (e) {
-      console.log('answer event ftw', e.answer)
-      // console.log('rcv', this.answers)
+      // picking up data from child component
       this.answers[this.currentQuestion] = e.answer
-      if ((this.currentQuestion + 1) === this.questions.length) {
+      // when reaching the end of the survey
+      if (this.currentQuestion === this.questions.length - 1) {
         this.handleResults()
         this.questionStage = false
         this.resultsStage = true
@@ -72,15 +68,16 @@ export default {
       }
     },
     handleResults () {
-      // console.log('handle results', this.answers)
-      this.questions.forEach((a, index) => {
-        if (this.answers[index] === a.answer) {
-          this.correct++
-        }
-      })
-      this.perc = ((this.correct / this.questions.length) * 100).toFixed(2)
-      console.log(this.correct + ' ' + this.perc)
-      // send data to server
+      console.log('results', this.answers)
+      // TODO send data to server
+
+      // this.questions.forEach((a, index) => {
+      //   if (this.answers[index] === a.answer) {
+      //     this.correct++
+      //   }
+      // })
+      // this.perc = ((this.correct / this.questions.length) * 100).toFixed(2)
+      // console.log(this.correct + ' ' + this.perc)
     }
   }
 }

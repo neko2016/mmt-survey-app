@@ -1,36 +1,44 @@
 {
-    "title": "Quiz about Foo",
+    "title": "MMT Sound Perception Survey",
     "questions": [
       {
-        "text": "Is true true?",
-        "type": "tf",
-        "answer": "t"
-      },
-      {
-        "text": "Is false true?",
-        "type": "tf",
-        "answer": "f"
-      },
-      {
-        "text": "What is the best beer?",
-        "type": "mc",
-        "answers": [
-          "Coors",
-          "Miller",
-          "Bud",
-          "Anchor Steam"
+        "text": "Which clip sounds better?",
+        "answer": "A",
+        "options": [
+          "A",
+          "B",
+          "No difference"
         ],
-        "answer": "Anchor Steam"
+        "tracks": { 
+          "A": "http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3",
+          "B": "http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3"
+        }
       },
       {
-        "text": "What is the best cookie?",
-        "type": "mc",
-        "answers": [
-          "Chocolate Chip",
-          "Sugar",
-          "Beer"
+        "text": "Which clip sounds better?",
+        "answer": "B",
+        "options": [
+          "A",
+          "B",
+          "No difference"
         ],
-        "answer": "Sugar"
+        "tracks": { 
+          "A": "http://soundbible.com/mp3/Alligator%20Crocodile%20Growl-SoundBible.com-723655949.mp3",
+          "B": "http://soundbible.com/mp3/Cow%20And%20Bell-SoundBible.com-1243222141.mp3"
+        }
+      },
+      {
+        "text": "Which clip sounds better?",
+        "answer": "No difference",
+        "options": [
+          "A",
+          "B",
+          "No difference"
+        ],
+        "tracks": { 
+          "A": "http://soundbible.com/mp3/Seal-SoundBible.com-733529197.mp3",
+          "B": "http://soundbible.com/mp3/Really%20Big%20Burp-SoundBible.com-1963610382.mp3"
+        }
       }
     ]
   }
