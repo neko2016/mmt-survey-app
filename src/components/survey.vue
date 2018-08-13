@@ -2,10 +2,10 @@
   <div id="quiz">
     <div v-if="introStage">
       <h1>{{title}}</h1>
-      <p>This survey contains 10 sections.</p>
-      <p>You will be presented with 2 sound clips in each section.</p>
-      <p>Please choose the one that you prefer.</p>
-      <button @click="startQuiz">START!</button>
+      <p>This survey contains 10 sections. You will be presented with 2 sound clips in each section.</p>
+      <p>Hover over the button to listen to the sound clip.</p>
+      <p>Click the button to choose the one that you prefer.</p>
+      <button id="startBtn" @click="startQuiz">START!</button>
     </div>
 
     <!-- v-bind:childProps='parentProps' -->
@@ -74,4 +74,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#startBtn{
+  display: block;
+  border: none;
+  border-radius: 3px;
+  background: darkcyan;
+  color: white;
+  width: 200px;
+  height: 70px;
+  margin: 20px auto;
+  margin-top: 80px;
+  cursor: pointer;
+  font-size: 18px;
+}
 </style>

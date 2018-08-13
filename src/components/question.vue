@@ -1,20 +1,28 @@
 <template>
   <div>
-    <p>Question {{ questionNumber }}: {{ question.text }} </p>
+    <h1 class="section-title">Question {{ questionNumber }}: {{ question.text }} </h1>
 
-      <div class="sound-tracks">
-        <label class="sound-clip" @click.prevent="playSound(question.tracks.A)">
+      <!-- <div class="sound-tracks"> -->
+        <!-- <label class="sound-clip" @click.prevent="playSound(question.tracks.A)"> -->
+        <!-- <label class="sound-clip" @mouseover="playSound(question.tracks.A)" @mouseleave="stopSound()">
           <span>Clip A</span>
-        </label>
+        </label> -->
 
-        <label class="sound-clip" @click.prevent="playSound(question.tracks.B)">
+        <!-- <label class="sound-clip" @click.prevent="playSound(question.tracks.B)"> -->
+        <!-- <label class="sound-clip" @mouseover="playSound(question.tracks.B)" @mouseleave="stopSound()">
           <span>Clip B</span>
-        </label>
-      </div>
+        </label> -->
+      <!-- </div> -->
 
       <div class="user-options">
         <div v-for="(choice,index) in question.options" v-bind:key='choice.id' class="option-wrapper">
-          <label :for="'opt-'+index" class="option-label" :class="{active: answer === choice}">
+          <!-- <label :for="'opt-'+index" class="option-label" :class="{active: answer === choice}">-->
+          <!-- autoplay when hovering over the buttons -->
+          <label :for="'opt-'+index"
+          class="option-label" :class="{active: answer === choice}"
+          @mouseover.prevent="playSound(question.tracks[choice])"
+          @mouseleave.prevent="stopSound()"
+          >
             <input type="radio" :id="'opt-'+index" name="currentQuestion" v-model="answer" :value="choice" class="option-value">
             <span>{{choice}}</span>
           </label>
@@ -55,16 +63,26 @@ export default {
   data () {
     return {
       answer: null,
-      isActive: false
+      clip: null
     }
   },
   // receive data passed from parent, array or obejct
   props: [ 'question', 'questionNumber' ],
+  // autoplay with BUGS
+  // mounted () {
+  //   this.playSound(this.question.tracks.B)
+  // },
   methods: {
-    playSound: function (sound) {
-      if (sound) {
-        var audio = new Audio(sound)
-        audio.play()
+    playSound: function (url) {
+      if (url && this.clip === null) {
+        this.clip = new Audio(url)
+        this.clip.play()
+      }
+    },
+    stopSound: function () {
+      if (this.clip !== null) {
+        this.clip.pause()
+        this.clip = null
       }
     },
     submitAnswer: function () {
@@ -80,12 +98,15 @@ export default {
 </script>
 
 <style>
+.section-title {
+  font-size: 32px;
+}
+
 .sound-tracks {
   display: flex;
   justify-content: center;
 }
 .sound-clip{
-  /* border: 2px solid salmon; */
   background: darkcyan;
   color: white;
   border-radius: 50%;
@@ -93,7 +114,6 @@ export default {
   width: 100px;
   height: 100px;
 }
-
 .sound-clip span {
   display: block;
   line-height: 18px;
@@ -118,13 +138,19 @@ export default {
   font-size: 18px;
 }
 
+label:hover{
+  border: 2px solid #ffbca1;
+  background: #ffbca1;
+  color: white;
+}
+
 .option-label.active {
   background: salmon;
+  border: 2px solid salmon;
   color: white;
 }
 
 .option-label span {
-  /* border: 1px solid; */
   display:block;
   height: 100%;
   padding-top: 25px;
